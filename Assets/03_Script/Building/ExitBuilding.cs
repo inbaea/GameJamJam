@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class ExitBuilding : MonoBehaviour
 {
-    public int Score;
-    public int Time;
-    public string Map;
+    // Start is called before the first frame update
     void Start()
     {
         
