@@ -24,7 +24,7 @@ public class Suggest : MonoBehaviour
 
     IEnumerator GetRand()
     {
-        r = Random.Range(0, 5);
+        r = Random.Range(0, 36);
         d = Random.Range(0, 8);
 
         yield return null;
@@ -187,15 +187,15 @@ public class Suggest : MonoBehaviour
         }
         if (r == 33)
         {
-            tmp.text = "";
+            tmp.text = "´©·îÁö Åë´ß";
         }
         if (r == 34)
         {
-            tmp.text = "";
+            tmp.text = "±èÁ¾±¸Âı½ÒÅë´ß±¸ÀÌ";
         }
         if (r == 35)
         {
-            tmp.text = "";
+            tmp.text = "½Ä¸À¶ËÁıÆ¢±è";
         }
 
         del[d].sprite = chiken[r].sprite;

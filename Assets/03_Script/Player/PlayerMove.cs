@@ -29,6 +29,7 @@ public class PlayerMove : MonoBehaviour
     public RectTransform GOOBNEPos;
     public RectTransform KYOCHONPos;
     public RectTransform NORANGPos;
+    public RectTransform KIMPos;
 
     RectTransform curr_a;
 
@@ -180,6 +181,19 @@ public class PlayerMove : MonoBehaviour
                 map_rect.anchoredPosition = new Vector2(0, 0);
                 rect.anchoredPosition = new Vector2(0, -50);
                 JADAMPos.anchoredPosition = new Vector2(0, 0);
+                InStore = true;
+            }
+        }
+
+        if (coll.gameObject.name == "KIM")
+        {
+            if (CanInside)
+            {
+                curr_a = KIMPos;
+                curr = map_rect.anchoredPosition;
+                map_rect.anchoredPosition = new Vector2(0, 0);
+                rect.anchoredPosition = new Vector2(0, -50);
+                KIMPos.anchoredPosition = new Vector2(0, 0);
                 InStore = true;
             }
         }
