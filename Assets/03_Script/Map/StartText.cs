@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class StartText : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class StartText : MonoBehaviour
     {
         StartCoroutine(LoadingText_b());
     }
+
 
     IEnumerator LoadingText_b()
     {
