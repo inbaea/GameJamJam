@@ -5,16 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int Score;
-    public int Time;
-    public string Map;
+    public int Map;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Score = 0;
+        Map = 2;
     }
 }
