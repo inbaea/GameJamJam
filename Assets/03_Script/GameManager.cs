@@ -5,11 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int Score;
-    public int Map;
 
     void Start()
     {
         Score = 0;
-        Map = 2;
     }
 }

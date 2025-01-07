@@ -5,17 +5,23 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public Vector2 inputVec;
-    Rigidbody2D rigid;
-    public float speed = 250;
     RectTransform rect;
+
+    Rigidbody2D map_rigid;
+    RectTransform map_rect;
+
+    public float speed;
     public bool CanMove = true;
-    public GameObject manager;
+
+    public GameObject map;
+    Animator anim;
 
     void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
         rect = GetComponent<RectTransform>();
-        manager = GameObject.Find("GameManager");
+        map_rigid = map.GetComponent<Rigidbody2D>();
+        map_rect = map.GetComponent<RectTransform>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -29,12 +35,13 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime * -1;
+        map_rigid.MovePosition(map_rigid.position + nextVec);
     }
 
     private void LateUpdate()
     {
+        anim.SetFloat("Speed", inputVec.magnitude);
         if(inputVec.x < 0)
         {
             rect.localScale = new Vector3(-1f, 1f, 1f);
@@ -46,35 +53,28 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void MapMove()
+    public void OnTriggerEnter2D(Collider2D coll)
     {
+        Debug.Log(coll.name);
+        if (coll.gameObject.name == "Wall")
+        {
+            StartCoroutine(MovingWall());
+        }
 
+        if (coll.gameObject.name == "BBQ")
+        {
+            Vector2 vec = new Vector2(0, 0);
+            map_rect.anchoredPosition = new Vector2(0, 0);
+        }
     }
 
-    public void OnCollisionEnter2D(Collision2D coll)
+    IEnumerator MovingWall()
     {
-        if (coll.gameObject.name == "Top")
-        {
-            manager.GetComponent<GameManager>().Map = manager.GetComponent<GameManager>().Map - 3;
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -425f);
-        }
+        CanMove = false;
+        inputVec.x = inputVec.x * -1f;
+        inputVec.y = inputVec.y * -1f;
+        yield return new WaitForSeconds(0.1f);
 
-        if (coll.gameObject.name == "Right")
-        {
-            manager.GetComponent<GameManager>().Map = manager.GetComponent<GameManager>().Map + 1;
-            rect.anchoredPosition = new Vector2(-875f, rect.anchoredPosition.y);
-        }
-
-        if (coll.gameObject.name == "Left")
-        {
-            manager.GetComponent<GameManager>().Map = manager.GetComponent<GameManager>().Map - 1;
-            rect.anchoredPosition = new Vector2(875f, rect.anchoredPosition.y);
-        }
-
-        if (coll.gameObject.name == "Bottom")
-        {
-            manager.GetComponent<GameManager>().Map = manager.GetComponent<GameManager>().Map + 3;
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, 425f);
-        }
+        CanMove = true;
     }
 }

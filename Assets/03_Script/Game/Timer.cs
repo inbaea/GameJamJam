@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 
     private void Awake()
     {
-        time = 150f;
+        time = 155f;
         player = GameObject.Find("Player");
     }
 
