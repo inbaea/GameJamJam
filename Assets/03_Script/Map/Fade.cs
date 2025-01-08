@@ -12,6 +12,11 @@ public class Fade : MonoBehaviour
         StartCoroutine(Fadeflow());
     }
 
+    public void StartPannel()
+    {
+        StartCoroutine(Fadeflow());
+    }
+
     IEnumerator Fadeflow()
     {
         pannel.gameObject.SetActive(true);

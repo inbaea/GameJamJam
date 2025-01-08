@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     public bool CanMove = false;
     public bool InStore = false;
     public bool CanInside = true;
+    public bool Pick_Up = false;
 
     public RectTransform BBQPos;
     public RectTransform BHCPos;
@@ -33,17 +34,34 @@ public class PlayerMove : MonoBehaviour
 
     RectTransform curr_a;
 
+    AudioSource CoinSound;
+
     public GameObject map;
+    public GameObject sug;
     Animator anim;
 
     void Awake()
     {
+        CoinSound = GetComponent<AudioSource>();
         rect = GetComponent<RectTransform>();
         rigid = GetComponent<Rigidbody2D>();
         map_rigid = map.GetComponent<Rigidbody2D>();
         map_rect = map.GetComponent<RectTransform>();
         anim = GetComponent<Animator>();
         StartCoroutine(MoveStart());
+    }
+
+    public void StartPlayer()
+    {
+        map_rect.anchoredPosition = new Vector2(0, 0);
+        rect.anchoredPosition = new Vector2(110, 0);
+        StartCoroutine(MoveStart());
+
+        InStore = false;
+        Pick_Up = false;
+        CanInside = false;
+        curr_a.anchoredPosition = new Vector2(0, 4000);
+        StartCoroutine(InsideTime());
     }
 
     IEnumerator MoveStart()
@@ -93,7 +111,6 @@ public class PlayerMove : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D coll)
     {
-        Debug.Log(coll.name);
         if (coll.gameObject.name == "Wall")
         {
             StartCoroutine(MovingWall());
@@ -255,6 +272,23 @@ public class PlayerMove : MonoBehaviour
                 rect.anchoredPosition = new Vector2(0, -50);
                 NORANGPos.anchoredPosition = new Vector2(0, 0);
                 InStore = true;
+            }
+        }
+
+        if (coll.gameObject.name == "Pick")
+        {
+            sug.GetComponent<Suggest>().curr_chiken.gameObject.SetActive(false);
+            sug.GetComponent<Suggest>().curr_coll.SetActive(false);
+            Pick_Up = true;
+        }
+
+        if (coll.gameObject.name == "Des")
+        {
+            if (Pick_Up)
+            {
+                CoinSound.Play();
+                sug.GetComponent<Suggest>().GetScore();
+                Pick_Up = false;
             }
         }
 

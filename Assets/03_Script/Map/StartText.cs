@@ -15,6 +15,11 @@ public class StartText : MonoBehaviour
         StartCoroutine(LoadingText_b());
     }
 
+    public void StartText_a()
+    {
+        StartCoroutine(LoadingText_b());
+    }
+
 
     IEnumerator LoadingText_b()
     {
